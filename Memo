@@ -1,0 +1,69 @@
+1) 인증을 위한 auth 호출. 
+   > auth 서비스를 호출하기 위한 객체
+   > const auth = getAuth();
+   > authService.currentUser() : 로그인 여부에 따라 user 또는 null 반환. 현재 유저가 없으면 null
+
+2) 계정 만들기
+   > const data = await createUserWithEmailAndPassword(auth, email, password);
+
+3) 로그인 하기
+   > const data = await signInWithEmailAndPassword(auth, email, password);
+
+4) persistence
+   > setPersistence : 사용자를 어떻게 기억할지 선택
+      - 기본값 local : 브라우저를 닫더라도 사용자 정보 기억
+      - session : 브라우저가 열린 동안만 기억
+      - none : 유저정보를 기억 x
+
+5) onAuthStateChanged() : 사용자 로그인상태 변화를 관찰하는 관찰자 (변화를 알아차림)
+
+  useEffect(()=>{
+    authService.onAuthStateChanged((user) =>{
+      if(user){
+        setIsLoggedIn(true); > 로그인되어있다면 
+      }else{
+        setIsLoggedIn(false); > 로그인 되어있지 않다면
+      }
+      setInit(true); // init이 false면 아래 AppRouter 숨김
+    });
+    
+  }, [])
+
+
+6) const provider = new GoogleAuthProvider(); // provider가 구글이 됨 (제공자)
+   const provider = new GithubAuthProvider();
+
+   const data = signInWithPopup(authService, provider); // 인증서비스 객체와 provider 객체로 인해 로그인팝업창 띄움
+
+7) authService.signOut(); // 로그아웃
+
+8) <Redirce from = "*" t0 = "/"/> : "/" route 밖으로 이동하면 여기 "/"로 돌아가라(redirect) 라는 뜻
+
+9) const docRef = await addDoc(collection(dbService, "sweets"),{
+            sweet : sweet, // sweet는 document의 key가 될 것임
+            createdAt : Date.now()
+        });
+
+        setSweet("");
+   - promise를 리턴하므로 await, async 적용 
+   - addDoc : 콜렉션에 add할것임
+   - collection : firebase의 firestore서비스인 dbservice로 sweet 컬렉션 만듬
+   - "sweets" : 경로
+   - data : 해당 데이터를 담은 새로운 document를 collection에 추가. document id를 자동으로 부여하면서 말임
+
+
+10) 
+    const getSweets = async() => {
+        const dbsweets = await getDocs(collection(dbService, "sweets"));
+        // dbservice를 불러와서 "sweets" 콜렉션의 값을 getDocs로 다 가져옴
+           리턴하는 것은 querysnapshot 반환
+        dbsweets.forEach(document => console.log(document.data()));
+    }
+
+11) onSnapshot(collection(dbService, "sweets"),snapshot =>{
+            console.log("something happened");
+        })
+
+    - realtime으로 만들 수 있음.
+    - onsnapshot은 db변화를 실시간으로 알려줌.
+    - 내가 무언가를 하게 될 때 console 출력, 읽어들일때 쓸때 삭제할때 업데이트할때 발생
