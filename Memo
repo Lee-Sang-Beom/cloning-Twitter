@@ -67,3 +67,69 @@
     - realtime으로 만들 수 있음.
     - onsnapshot은 db변화를 실시간으로 알려줌.
     - 내가 무언가를 하게 될 때 console 출력, 읽어들일때 쓸때 삭제할때 업데이트할때 발생
+
+
+
+   11-1) 이거를 써도됨 :foreach 사용방법
+
+   const getSweets = async() => {
+        const dbsweets = await getDocs(collection(dbService, "sweets"));
+        dbsweets.forEach(document => {
+            const sweetObj = {
+                ...document.data(), // 데이터의 내용물을 가져와 풀어놓음
+                id : document.id, // 맵할당시, key부여하기 위한 용도
+                
+            };
+            setSweets((prev) => [sweetObj, ...prev]);
+        });
+    }
+    useEffect(()=>{
+        getSweets(); // 컴포넌트가 마운트 될때마다 getSweets 호출
+        
+        onSnapshot(collection(dbService, "sweets"),snapshot =>{
+            console.log("something happened"); 
+            // dbservice를 이용해 sweets 컬렉션의 변화를 실시간으로 확인. 
+        })
+    },[])
+
+   11-2) 이거를 써도됨 : 이게 더 적게 렌더링. array를 만들고 setsweet
+   useEffect(()=>{        
+        onSnapshot(collection(dbService, "sweets"),snapshot =>{
+            const sweetArray = snapshot.docs.map((doc) => ({
+                id : doc.id,
+                ...doc.data(),
+            }));
+
+            console.log(sweetArray);
+            // dbservice를 이용해 sweets 컬렉션의 변화를 실시간으로 확인. 변화발생 때 마다 console.log
+        })
+    },[])
+
+
+12) const onDeleteClick = async() =>{
+        const ok = window.confirm("Are you sure you want to delete this sweet?");
+        if(ok){
+            await deleteDoc(doc(dbService, "sweets", `${sweetObj.id}`)); // 삭제하는 부분. 세번째파라미터는 sweets콜렉션의 어떤 document를 삭제하는가 의 경로같은 것
+        }
+    }
+
+13) updateDoc(doc(dbService, "sweets", `${sweetObj.id}`),{
+            text : newSweet 
+            // 12번과 같이, 지정 콜렉션의 documnet 객체인 doc를 만들고, 
+               해당 doc에 접근해 두번째파라미터로 내용 중  바꿀내용 지시
+        })
+
+14) const onFileChange = (event) =>{
+        const {target : {files}} = event; // input event에서 target.files을 가져옴
+        const file = files[0]; 
+        
+        const reader = new FileReader(); // fileReader api 사용하여 reader만듬
+        reader.onloadend = (finishedEvent) => { // reader 이벤트가 발생 후 끝나면 실행
+            const result = finishedEvent.currentTarget.result;
+            // const {currentTarget : {result}} = finishedEvent;
+            // 이 result는 브라우저에 복붙하면 이미지가 표시됨
+            setImgFileString(result);
+        }
+        reader.readAsDataURL(file); //readasdataurl로 파일을 읽고, 이게 '끝나면' 위의 onloadend 이벤트 리스너가 발동됨 
+        
+    }

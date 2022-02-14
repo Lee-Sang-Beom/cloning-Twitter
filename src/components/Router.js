@@ -19,14 +19,12 @@ export default function Router({isLoggedIn, userObj}) {
                 <Route exact path = "/profile">
                     <Profile />
                 </Route> 
-                {/* <Redirect from="*" to ="/"/> */}
                 </>
                 : 
                 <>
                 <Route exact path = "/">
                     <Auth />
                 </Route>
-                {/* <Redirect from="*" to ="/"/> */}
                 </>
 
                 }
