@@ -30,8 +30,7 @@ export default function Sweet({sweetObj, isOwner}){
     }
     const onSubmit = (event) => {
         event.preventDefault();
-        console.log(authService.currentUser);
-        console.log(newSweet,sweetObj.text);
+
 
         updateDoc(doc(dbService, "sweets", `${sweetObj.id}`),{
             text : newSweet
