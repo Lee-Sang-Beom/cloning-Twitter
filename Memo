@@ -133,3 +133,140 @@
         reader.readAsDataURL(file); //readasdataurl로 파일을 읽고, 이게 '끝나면' 위의 onloadend 이벤트 리스너가 발동됨 
         
     }
+
+15)     const onSubmit = async(event) =>{
+        event.preventDefault();
+        
+
+        const fileRef = ref(storageService, `${userObj.uid}/${v4()}`);
+        /* Cloud Storage에 파일을 업로드하려면 
+           우선 파일 이름을 포함하여 파일의 전체 경로를 가리키는 참조를 만듭니다.
+        (파일에 대한 reference를 만듬.)
+
+        폴더를 만듬. ${userobj.uid} > 유저 아이디를 이용하여 폴더이름 생성
+        사진에 이름을 줌. > v4()는 랜덤으로 특별한 식별자를 랜덤 생성 */
+
+        const response = await uploadString(fileRef, imgFileString, 'data_url');
+        /*
+         uploadString() 메서드를 사용하여 원시 문자열, base64, base64url 
+         또는 data_url로 인코딩된 문자열을 Cloud Storage에 추가할 수 있습니다.
+
+         1. 앞서만든 파일 이름을 포함한 파일의 전체경로를 가리킬 수 있는 참조 변수
+         2. 데이터 (파일 스트링)
+         3. 데이터 포맷 (format) >> 'data_url' >> readAsDataURL한것을 여기서 사용하는 거임
+        */
+        
+        console.log(response);
+        // await addDoc(collection(dbService, "sweets"),{ // collection = sweets
+        //     text : sweet, // sweet는 document의 key가 될 것임
+        //     createdAt : Date.now(),
+        //     createrId : userObj.uid,
+        // });
+
+        setSweet("");
+    }
+
+16) 이미지 다운로드가 가능한 url download 주소
+    await getDownloadURL(response.ref)
+
+        const onSubmit = async(event) =>{
+        event.preventDefault();
+        let fileUrl = "";
+
+        if(imgFileString != ""){
+            const fileRef = ref(storageService, `${userObj.uid}/${v4()}`);
+            const response = await uploadString(fileRef, imgFileString, 'data_url');
+            fileUrl = await getDownloadURL(response.ref);
+        }
+
+        const sweetObj = {
+            text : sweet, 
+            createdAt : Date.now(),
+            createrId : userObj.uid,
+            fileUrl,
+        }
+
+        await addDoc(collection(dbService, "sweets"),sweetObj);
+
+        setSweet("");
+        setImgFileString("");
+    }
+
+17) storage에 있는 이미지 삭제하기
+const onDeleteClick = async() =>{
+        const ok = window.confirm("Are you sure you want to delete this sweet?");
+        if(ok){
+            await deleteDoc(doc(dbService, "sweets", `${sweetObj.id}`));
+            /* 만약 fileurl을 firebase의 storageservice와의 레퍼런스로 만들고 이를 deleteobject에 넣어주면,
+               firebase는 우리 storage안에서 이 reference를 찾아 제거
+            */
+           if(sweetObj.fileUrl !== ""){
+                deleteObject(ref(storageService, sweetObj.fileUrl));
+           }
+            
+        }
+    }
+
+18) query 쓰는 방법 알기
+
+    const getMySweets = async() => { // 우리가 어떤유저의 sweet (text 등을)을 불러와야하는 지 암. userobj으로
+        const q = query(collection(dbService, "sweets")
+        ,where("createrId", "==", `${userObj.uid}`)
+        ,orderBy("createdAt"));
+         
+         // where은 createrid와 userobj.uid가 같은 것만 골라오는 것. 이걸 필터링
+         // orderby는 createdat을 기준으로 순서대로 정렬 > 에러생김. > index 복합색인을 에러따라 만들어줘야함
+
+        const sweets = await getDocs(q); // 얻어오기 (get함수)
+        console.log(sweets.docs.map((doc)=>doc.data())); // 출력하기
+
+    }
+
+19) const onSubmit = async(event) =>{
+        event.preventDefault();
+        if(userObj.displayName !== newDisplayName){ 이름 변경이 이루어지면, 
+            await updateProfile(userObj, { displayName: newDisplayName }); userobj.displayname 속성값을 저거로 바꿈
+        }
+        refreshUser();
+    }
+
+20) const refreshUser=() =>{ 
+    //우리가 원하는 firebase의 특정부분만을 가져와서 react에게 줄수있음
+
+    const user = authService.currentUser;
+    setUserObj({ // userobj를 설정할때 엄청많은 전체를 설정하는게 아니라 변경될 것 같은 부분만 수정
+      displayName : user.displayName,
+      uid : user.uid,
+      updateProfile : (args) => updateProfile(args),
+      // arg를 이용해 리턴값으로 진짜 user.updateprofile을 보내줌. 단, 
+    })
+
+
+    ( app.js )
+      useEffect(()=>{
+    authService.onAuthStateChanged((user) =>{
+      if(user){
+        setIsLoggedIn(true);
+        setUserObj({ // userobj를 설정할때 엄청많은 전체를 설정하는게 아니라 변경될 것 같은 부분만 수정
+
+           displayName : user.displayName,
+           uid : user.uid,
+           updateProfile : (args) => updateProfile(args),
+          // arg를 이용해 리턴값으로 진짜 user.updateprofile을 보내줌. 단, 
+        });
+      }else{
+        setIsLoggedIn(false);
+      }
+      setInit(true); // init이 false면 아래 AppRouter 숨김
+    });
+  }, [])
+
+   >> 2번째 방법은 refreshUser에 이 문구를 넣는것
+
+     setUserObj(Object.assign({},user));
+     1) object.assign 은 target과 source가 요구됨
+        기본적으로 빈 object와 source가 요구됨
+
+     2) 빈 object안에 원래 user의 사본이 새 object형태로 생성됨.
+        이때 react가 새 object가 생성되었구나 하고 재렌더링 하는것. 
+        (1번째 방법도 마찬가지로 object의 변경점을 보내줬기 때문에 재렌더링되는것임)
