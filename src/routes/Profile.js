@@ -42,7 +42,8 @@ export default function Profile({userObj, refreshUser}) {
     <div className="container">
         <form onSubmit={onSubmit} className="profileForm">
             <input type="text"
-                autofocus placeholder = "display name" 
+                autoFocus 
+                placeholder = "display name" 
                 value = {newDisplayName} 
                 onChange={onChange}
                 className="formInput"/>

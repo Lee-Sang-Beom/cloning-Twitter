@@ -70,7 +70,7 @@ export default function SweetFactory({userObj}){
                     />
                 <input type="submit" value="Sweet" className="factoryInput__arrow"/>
             </div>
-            <label for="attach-file" className="factoryInput__label">
+            <label htmlFor="attach-file" className="factoryInput__label">
                 <span>Add photos</span>
                 <FontAwesomeIcon icon={faPlus} />
             </label>

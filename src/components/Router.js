@@ -4,11 +4,12 @@ import Auth from "../routes/Auth";
 import Home from "../routes/Home";
 import Navigation from "components/Navigation";
 import Profile from "routes/Profile";
+import { HashRouter } from "react-router-dom";
 
 export default function Router({isLoggedIn, userObj, refreshUser}) {
    
     return(
-        <BrowserRouter>
+        <HashRouter base = "/">
         {isLoggedIn && <Navigation userObj = {userObj}/>}
             <Switch>
                 {isLoggedIn ? 
@@ -39,6 +40,6 @@ export default function Router({isLoggedIn, userObj, refreshUser}) {
 
                 }
             </Switch>
-        </BrowserRouter>
+        </HashRouter>
     )
 }
