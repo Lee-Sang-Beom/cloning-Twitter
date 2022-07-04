@@ -35,7 +35,7 @@ npm start
 ```
 
 ### 2.3 Firebase 설치
- - React 실행을 위해, Node.js가 사전에 설치되어 있어야 합니다.
+ - 데이터 관리를 위해 사용하는 데이터베이스인 Firebase를 설치합니다.
 ```
 npm install firebase
 ```
