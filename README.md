@@ -1,70 +1,52 @@
-# Getting Started with Create React App
+Project - Switter
+======================
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 1. 프로젝트 계획 이유
+[**Switter**](https://lee-sang-beom.github.io/switter/#/) : 기본적으로 익힌 HTML, CSS, JS을 기반으로, 높은 실사용률을 지닌 JS 프레임워크인 React를 활용하는 방법을 익히기 위해 해당 프로젝트를 계획하였습니다. 또한, Firebase를 이용해 인증, 사용자 프로필, 채팅 데이터 등을 관리하여 간단한 채팅 프로그램을 제작하였습니다.
 
-## Available Scripts
+### - 제공기능
+	1. 회원가입, 로그인, 로그아웃 기능 (Firebase, Google, Github)
+	2. 사용자 프로필 관리 기능
+	3. 텍스트, 이미지 기반 채팅 기능
+    4. 채팅 수정, 삭제 기능
 
-In the project directory, you can run:
 
-### `npm start`
+## 2. 설치
+ > 프로그램 실행을 위한 설치과정을 기술합니다.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### 2.1 Node.js 설치
+ - React 실행을 위해, Node.js가 사전에 설치되어 있어야 합니다.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 2.2 React 설치
 
-### `npm test`
+ - Node.js 설치 후, React를 설치합니다.
+```
+npm install -g create-react-app
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+ - 설치 확인은 아래의 명령어를 사용하여 확인할 수 있습니다.
+```
+npm -v
+```
 
-### `npm run build`
+ - 실행
+```
+npm start
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 2.3 Firebase 설치
+ - React 실행을 위해, Node.js가 사전에 설치되어 있어야 합니다.
+```
+npm install firebase
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 2.4 기타 사용 라이브러리 : font Awesome
+ - 먼저 Font Awesome의 SVG 기반 아이콘을 활성화 시키기 위한 기본 패키지인 @fortawesome/fontawesome-svg-core를 설치합니다.
+```
+npm i @fortawesome/fontawesome-svg-core
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+ - Font Awesome을 React 컴포넌트 형태로 사용할 수 있도록 해주는 @fortawesome/react-fontawesome 이라는 패키지를 설치합니다.
+```
+npm i @fortawesome/react-fontawesome
+```
