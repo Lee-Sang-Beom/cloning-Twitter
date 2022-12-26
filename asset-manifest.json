@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/Lee-Sang-Beom/switter.git/static/css/main.5d1c0456.css",
-    "main.js": "/Lee-Sang-Beom/switter.git/static/js/main.5d6aba77.js",
-    "index.html": "/Lee-Sang-Beom/switter.git/index.html",
-    "main.5d1c0456.css.map": "/Lee-Sang-Beom/switter.git/static/css/main.5d1c0456.css.map",
-    "main.5d6aba77.js.map": "/Lee-Sang-Beom/switter.git/static/js/main.5d6aba77.js.map"
+    "main.css": "/switter/static/css/main.5d1c0456.css",
+    "main.js": "/switter/static/js/main.5d6aba77.js",
+    "index.html": "/switter/index.html",
+    "main.5d1c0456.css.map": "/switter/static/css/main.5d1c0456.css.map",
+    "main.5d6aba77.js.map": "/switter/static/js/main.5d6aba77.js.map"
   },
   "entrypoints": [
     "static/css/main.5d1c0456.css",
