@@ -43,6 +43,7 @@ export default function SweetFactory({userObj}){
         setSweet(value);
     }
 
+    // img upload
     const onFileChange = (event) =>{
         const {target : {files}} = event; 
         const file = files[0]; 

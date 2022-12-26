@@ -9,20 +9,23 @@ import { useHistory } from "react-router-dom/";
 export default function Profile({userObj, refreshUser}) {
     const history = useHistory();
     const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
+
+    // logout
     const onLogOutClick = () => {
         authService.signOut();
         history.push("/");
         refreshUser();
     }
 
+    // get : sweet data
     const getMySweets = async() => {
         const q = query(collection(dbService, "sweets")
         ,where("createrId", "==", `${userObj.uid}`)
         ,orderBy("createdAt","desc"));
 
         await getDocs(q);
-
     }
+
     useEffect(() => {
         getMySweets();
     },[]);
@@ -38,6 +41,7 @@ export default function Profile({userObj, refreshUser}) {
     const onChange = (event) => {
         setNewDisplayName(event.target.value);
     }
+
     return (
     <div className="container">
         <form onSubmit={onSubmit} className="profileForm">

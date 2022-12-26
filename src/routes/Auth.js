@@ -16,6 +16,7 @@ import {
 
 export default function Auth() {
  
+    // 사용자 로그인 방식에 따른 provider 지정
     const onSocialClick = async(event) =>{
         const {
             target : {name}
@@ -31,8 +32,8 @@ export default function Auth() {
         }
 
         await signInWithPopup(authService, provider);
-        
     }
+
     return (
     <div className="authContainer">
         <FontAwesomeIcon

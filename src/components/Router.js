@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Auth from "../routes/Auth";
 import Home from "../routes/Home";
 import Navigation from "components/Navigation";
@@ -10,6 +10,7 @@ export default function Router({isLoggedIn, userObj, refreshUser}) {
    
     return(
         <HashRouter base = "/">
+        {/* navigator 표시여부 지정 */}
         {isLoggedIn && <Navigation userObj = {userObj}/>}
             <Switch>
                 {isLoggedIn ? 

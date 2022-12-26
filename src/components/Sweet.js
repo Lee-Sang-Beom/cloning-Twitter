@@ -9,6 +9,8 @@ export default function Sweet({sweetObj, isOwner}){
 
     const [editing, setEditing] = useState(false);
     const [newSweet, setNewSweet] = useState(sweetObj.text);
+
+    // delete chat
     const onDeleteClick = async() =>{
         const ok = window.confirm("Are you sure you want to delete this sweet?");
         if(ok){
@@ -20,27 +22,28 @@ export default function Sweet({sweetObj, isOwner}){
         }
     }
 
-
+    // click edit btn
     const toggleEditing = () => setEditing((prev) => !prev);
+
     const onChange = (event) =>{
         const {
             target : {value}
         } = event;
         setNewSweet(value);
     }
+
     const onSubmit = (event) => {
         event.preventDefault();
-
-
         updateDoc(doc(dbService, "sweets", `${sweetObj.id}`),{
             text : newSweet
         })
-
         setEditing(false);
     }
+
     return (
         <div className="sweet">
             {
+                // editing=true 시 표시할 텍스트 영역
                 editing ? (
                 <>
                     <form onSubmit={onSubmit} className="container sweetEdit"> 
@@ -61,8 +64,6 @@ export default function Sweet({sweetObj, isOwner}){
                         cancel
                     </span>
                 </>
-                
-
                 )
                 :
                 (
